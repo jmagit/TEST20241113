@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 public class Calculadora {
+	
 	private double RoundIEEE754(double o) {
 		return (new BigDecimal(o))
 				.setScale(16, RoundingMode.HALF_UP)
@@ -20,5 +21,13 @@ public class Calculadora {
 	
 	public int suma(int a, int b) {
 		return a + b;
+	}
+	
+	public double divide(double a, double b) {
+		return a / b;
+	}
+	
+	public int divide(int a, int b) {
+		return a / b;
 	}
 }
