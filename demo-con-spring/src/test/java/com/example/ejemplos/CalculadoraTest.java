@@ -1,6 +1,8 @@
 package com.example.ejemplos;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.math.BigDecimal;
 
@@ -10,7 +12,11 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.RepetitionInfo;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 @DisplayName("Pruebas de la clase Calculadora")
 class CalculadoraTest {
@@ -47,6 +53,24 @@ class CalculadoraTest {
 				assertEquals(3, actual);
 			}
 
+			@RepeatedTest(value = 5, name = "{displayName} {currentRepetition}/{totalRepetitions}")
+			@DisplayName("Prueba repetida dos reales sin decimales")
+			void testSumaRepetida() {
+//				var calculadora = new Calculadora();
+
+				var actual = calculadora.suma(2, 2);
+
+				assertEquals(4, actual);
+			}
+			@RepeatedTest(value = 5, name = "{displayName} {currentRepetition}/{totalRepetitions}")
+			@DisplayName("Prueba repetida dos reales sin decimales (no hacer)")
+			void testSumaRepetidaMal(RepetitionInfo repetitionInfo) {
+//				var calculadora = new Calculadora();
+
+				var actual = calculadora.suma(repetitionInfo.getCurrentRepetition(), repetitionInfo.getCurrentRepetition());
+
+				assertEquals(2 * repetitionInfo.getCurrentRepetition(), actual);
+			}
 			@Test
 			@DisplayName("Prueba dos reales con decimales")
 			void testSumaDoubleDoubleConDecimales() {
@@ -75,6 +99,22 @@ class CalculadoraTest {
 				var actual = calculadora.suma(2, 2);
 
 				assertEquals(4, actual);
+			}
+			@ParameterizedTest(name = "{index} => {0} + {1} = {2}")
+			@CsvSource({ 
+				"1,2,3", 
+				"2,-3,-1",
+				"-1,2,1",
+				"-2,-3,-5",
+				"1,0,1",
+				"0.1,0.2,0.3"
+				})
+			void testSumaDeEnteros(double operando1, double operando2, double resultado) {
+				var calculadora = new Calculadora();
+
+				var actual = calculadora.suma(operando1, operando2);
+
+				assertEquals(resultado, actual);
 			}
 
 			@Test

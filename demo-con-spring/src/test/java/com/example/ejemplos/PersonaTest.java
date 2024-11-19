@@ -11,7 +11,7 @@ class PersonaTest {
 
 		@Test
 		void createPersona() {
-			var p = Persona.creaPersona("Pepito", "Grilloo");
+			var p = Persona.creaPersona("Pepito", "Grillo");
 
 			assertNotNull(p);
 //			assertEquals("Persona [id=0, nombre=Pepito, apellidos=Grillo]", p.toString());
