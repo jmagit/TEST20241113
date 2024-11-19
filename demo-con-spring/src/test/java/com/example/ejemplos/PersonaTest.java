@@ -11,9 +11,10 @@ class PersonaTest {
 
 		@Test
 		void createPersona() {
-			var p = Persona.creaPersona("Pepito", "Grillo");
+			var p = Persona.creaPersona("Pepito", "Grilloo");
 
 			assertNotNull(p);
+//			assertEquals("Persona [id=0, nombre=Pepito, apellidos=Grillo]", p.toString());
 			assertAll("Propiedade", 
 					() -> assertEquals(0, p.getId()),
 					() -> assertEquals("Pepito", p.getNombre(), "Nombre"),
@@ -24,6 +25,7 @@ class PersonaTest {
 			var p = Persona.creaPersona("Pepito");
 
 			assertNotNull(p);
+//			assertEquals("Persona [id=0, nombre=Pepito, apellidos=null]", p.toString());
 			assertAll("Propiedade", 
 					() -> assertEquals(0, p.getId()),
 					() -> assertEquals("Pepito", p.getNombre(), "Nombre"),
