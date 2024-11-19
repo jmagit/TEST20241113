@@ -111,6 +111,11 @@ class CalculadoraTest {
 				assertEquals(0, calculadora.divide(1, 2));
 			}
 
+			@Test
+			void divideDobles() {
+				assertEquals(0.5, calculadora.divide(1.0, 2.0));
+			}
+
 		}
 
 		@Nested
@@ -121,8 +126,22 @@ class CalculadoraTest {
 			}
 
 			@Test
-			void divideDobles() {
-				assertEquals(Double.POSITIVE_INFINITY, calculadora.divide(1.0, 0.0));
+			void dividePorCeroDobles() {
+				assertThrows(ArithmeticException.class, () -> calculadora.divide(1.0, 0.0));
+			}
+
+			@Test
+			void dividePorCeroDoblesConTry() {
+				try {
+					calculadora.divide(1.0, 0.0);
+					fail("Falta la excepcion");
+				} catch (Exception e) {
+				}
+			}
+
+			@Test
+			void malEjemploDePruebas() {
+				calculadora.divide(1, 1);
 			}
 		}
 	}
