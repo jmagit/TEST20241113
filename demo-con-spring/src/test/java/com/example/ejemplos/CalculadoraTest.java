@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 
 import org.junit.jupiter.api.AfterAll;
@@ -11,14 +12,23 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.RepetitionInfo;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
+
+import com.example.testutils.PrivateMethod;
+import com.example.testutils.Smoke;
 
 @DisplayName("Pruebas de la clase Calculadora")
+@TestMethodOrder(OrderAnnotation.class)
 class CalculadoraTest {
 	private Calculadora calculadora;
 
@@ -45,6 +55,8 @@ class CalculadoraTest {
 		class OK {
 			@Test
 			@DisplayName("Prueba dos reales sin decimales")
+			@Tag("smoke")
+			@Order(2)
 			void testSumaDoubleDoubleSinDecimales() {
 //				var calculadora = new Calculadora();
 
@@ -93,6 +105,7 @@ class CalculadoraTest {
 			}
 
 			@Test
+			@Order(1)
 			void testSumaIntInt() {
 				var calculadora = new Calculadora();
 
@@ -142,11 +155,19 @@ class CalculadoraTest {
 		}
 	}
 
+	@ParameterizedTest
+	@ValueSource(doubles = {0.1+0.2})
+	void RoundIEEE754Test(double caso) throws NoSuchMethodException, SecurityException, IllegalAccessException, InvocationTargetException {
+		var actual = (double)PrivateMethod.exec(calculadora, "RoundIEEE754", new Class[] { double.class }, caso);
+		
+		assertEquals(0.3, actual);
+	}
 	@Nested
 	class Divide {
 		@Nested
 		class OK {
 			@Test
+			@Smoke
 			void divideEnteros() {
 				assertEquals(0, calculadora.divide(1, 2));
 			}

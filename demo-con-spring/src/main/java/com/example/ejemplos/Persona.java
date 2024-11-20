@@ -50,6 +50,7 @@ public class Persona {
 	}
 
 	public static Persona creaPersona(String nombre) {
+//		return null;
 		var p = new Persona();
 		p.setNombre(nombre);
 		return p;

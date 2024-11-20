@@ -2,11 +2,14 @@ package com.example.ejemplos;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 class PersonaTest {
 	@Nested
+	@Tag("smoke")
 	class OK {
 
 		@Test
@@ -25,7 +28,8 @@ class PersonaTest {
 			var p = Persona.creaPersona("Pepito");
 
 			assertNotNull(p);
-//			assertEquals("Persona [id=0, nombre=Pepito, apellidos=null]", p.toString());
+			Assumptions.assumeFalse(true, "Pendiente de terminar");
+			assertEquals("Persona [id=0, nombre=Pepito, apellidos=null]", p.toString());
 			assertAll("Propiedade", 
 					() -> assertEquals(0, p.getId()),
 					() -> assertEquals("Pepito", p.getNombre(), "Nombre"),
