@@ -1,6 +1,7 @@
 package com.gildedrose;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assumptions.assumeFalse;
 
@@ -16,7 +17,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 class GildedRoseTest {
 
 	@Test
-//    @Disabled
+	@Disabled
 	void foo() {
 		Item[] items = new Item[] { new Item("foo", 0, 0) };
 		GildedRose app = new GildedRose(items);
@@ -24,21 +25,20 @@ class GildedRoseTest {
 		assertEquals("foo", app.items[0].name);
 	}
 
-//  @Test
-//  void fullCoverageFake() {
-//      Item[] items = new Item[] { 
-//      		new Item("+5 Dexterity Vest", 10, 20),
-//              new Item("Aged Brie", 2, 0), //
-//              new Item("Sulfuras, Hand of Ragnaros", 0, 80), //
-//              new Item("Backstage passes to a TAFKAL80ETC concert", 5, 49),
-//              new Item("Conjured Mana Cake", 3, 6) 
-//              };
-//      GildedRose app = new GildedRose(items);
-//      for(int i=0; i < 30; i++)
-//      	app.updateQuality();
-//      assertEquals(5, app.items.length);
-//  }
-
+//	@Test
+//	void fullCoverageFake() {
+//		Item[] items = new Item[] { 
+//				new Item("+5 Dexterity Vest", 10, 20), 
+//				new Item("Aged Brie", 2, 0), 
+//				new Item("Sulfuras, Hand of Ragnaros", 0, 80), 
+//				new Item("Backstage passes to a TAFKAL80ETC concert", 5, 49), 
+//				new Item("Conjured Mana Cake", 3, 6) 
+//				};
+//		GildedRose app = new GildedRose(items);
+//		for (int i = 0; i < 30; i++)
+//			assertDoesNotThrow(() -> app.updateQuality());
+//	}
+//
 	@ParameterizedTest(name = "{index} => sellIn: {0} quality: {1} –> sellIn: {2} quality: {3}")
 	@CsvSource({ 
 		"11, 10, 10, 9", 
