@@ -1,4 +1,4 @@
-package com.example.testutils;
+package org.example.testutils;
 
 import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.ElementType.TYPE;
@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Tag;
 
 @Retention(RUNTIME)
 @Target({ TYPE, METHOD })
-@Tag("smoke")
-public @interface Smoke {
+@Tag("integration")
+public @interface IntegrationTest {
 
 }

@@ -1,8 +1,11 @@
-package com.example.ejemplos;
+package com.example.domains.entities;
 
+import java.util.Objects;
 import java.util.Optional;
 
-public class Persona {
+import com.example.domains.core.entities.EntityValidatable;
+
+public class Persona implements EntityValidatable {
 	private int id;
 	private String nombre;
 	private String apellidos;
@@ -43,6 +46,7 @@ public class Persona {
 		return "Persona [id=" + id + ", nombre=" + nombre + ", apellidos=" + apellidos + "]";
 	}
 
+
 	public static Persona creaPersona(String nombre, String apellidos) {
 //		return null;
 //		throw new ArithmeticException();
@@ -56,4 +60,30 @@ public class Persona {
 		return p;
 	}
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj instanceof Persona p) {
+			return id == p.id;
+		} else {
+			return false;
+		}
+	}
+
+	@Override
+	public String getErrorsMessage() {
+		var msg = new StringBuilder();
+		if(nombre.isBlank())
+			msg.append(" nombre: no puede estar en blanco.");
+		if(apellidos != null && apellidos.isBlank())
+			msg.append(" apellidos: no puede estar en blanco.");
+		return msg.isEmpty() ? "" : "ERRORES:" + msg.toString();
+	}
 }

@@ -123,7 +123,7 @@ class GildedRoseTest {
         		);
 	}
 
-	@Disabled
+//	@Disabled
 	@ParameterizedTest(name = "{index} => sellIn: {0} quality: {1} –> sellIn: {2} quality: {3}")
 	@CsvSource({
 		"11, 10, 10, 8",
@@ -150,7 +150,7 @@ class GildedRoseTest {
 //	@Disabled
 	void datasourceTest(String producto, int sellIn, int quality, int sellInResult, int qualityResult) {
 		String name = producto.replace("\'", "");
-		assumeFalse("Conjured Mana Cake".equals(name));
+//		assumeFalse("Conjured Mana Cake".equals(name));
 		Item product = new Item(name, sellIn, quality);
         GildedRose app = new GildedRose(new Item[] { 
         		product
