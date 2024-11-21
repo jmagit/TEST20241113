@@ -12,7 +12,7 @@ import com.example.exceptions.DuplicateKeyException;
 import com.example.exceptions.InvalidDataException;
 import com.example.exceptions.NotFoundException;
 
-@Service
+//@Service
 public class PersonaServiceImpl implements PersonaService {
 	private PersonaRepository dao;
 
