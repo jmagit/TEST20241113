@@ -3,6 +3,12 @@ package com.example.ejemplos;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
@@ -204,6 +210,22 @@ class CalculadoraTest {
 			void malEjemploDePruebas() {
 				calculadora.divide(1, 1);
 			}
+		}
+	}
+	@Nested
+	class Mockea {
+		@Test
+		void suma() {
+			var calc = mock(Calculadora.class);
+			when(calc.suma(anyInt(), anyInt())).thenReturn(3).thenReturn(2).thenReturn(1);
+			assertEquals(3, calc.suma(2, 2));
+			assertEquals(2, calc.suma(2, 2));
+			assertEquals(1, calc.suma(2, 2));
+			assertEquals(1, calc.suma(2, 2));
+			assertEquals(1, calc.suma(1, 1));
+			verify(calc,times(1)).suma(1, 1);
+			verify(calc,times(4)).suma(2, 2);
+			verify(calc,never()).suma(1, 2);
 		}
 	}
 }

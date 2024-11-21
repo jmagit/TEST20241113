@@ -10,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -214,7 +215,7 @@ class PersonaServiceTest {
 				var ex = assertThrows(InvalidDataException.class, () -> srv.add(item));
 				
 				assertEquals("error forzado", ex.getMessage());
-				verify(dao, times(0)).save(item);
+				verify(dao, never()).save(item);
 			}
 	
 			@Test
@@ -225,7 +226,7 @@ class PersonaServiceTest {
 				
 				assertThrows(DuplicateKeyException.class, () -> srv.add(item));
 				
-				verify(dao, times(0)).save(item);
+				verify(dao, never()).save(item);
 			}
 			
 			@Test

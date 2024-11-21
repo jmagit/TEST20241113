@@ -34,6 +34,7 @@ class PersonaTest {
 			assertTrue(p.isValid());
 			Assumptions.assumeFalse(true, "Pendiente de terminar");
 			assertEquals("Persona [id=0, nombre=Pepito, apellidos=null]", p.toString());
+			//assertEquals(p, Persona.creaPersona("Otra"));
 			assertAll("Propiedades", 
 					() -> assertEquals(0, p.getId()),
 					() -> assertEquals("Pepito", p.getNombre(), "Nombre"),
