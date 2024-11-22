@@ -18,7 +18,6 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -30,7 +29,6 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestClassOrder;
 import org.junit.jupiter.api.TestMethodOrder;
-import org.junit.jupiter.api.TestReporter;
 
 import com.example.domains.contracts.repositories.PersonaRepository;
 import com.example.domains.contracts.services.PersonaService;
@@ -40,8 +38,6 @@ import com.example.exceptions.InvalidDataException;
 import com.example.exceptions.NotFoundException;
 import com.example.testutils.IntegrationTest;
 import com.example.testutils.UnitTest;
-
-import net.datafaker.Faker;
 
 @TestClassOrder(ClassOrderer.OrderAnnotation.class)
 @TestMethodOrder(MethodOrderer.DisplayName.class)
@@ -57,23 +53,13 @@ class PersonaServiceTest {
 		List<Persona> listaFake;
 		
 		@BeforeEach
-		void setUp(TestReporter out) throws Exception {
-			var faker = new Faker(new Locale("es", "ES"));
-
-//			out.publishEntry("fullName", faker.name().fullName());
-//			out.publishEntry("firstName", faker.name().firstName());
-//			out.publishEntry("lastName", faker.name().lastName());
-//			out.publishEntry("streetAddress", faker.address().streetAddress());
-			listaFake = faker
-					.collection(() -> new Persona(faker.random().nextInt(100), faker.name().firstName(), faker.name().lastName()))
-					.len(4)
-					.generate();
-//			listaFake = new ArrayList<Persona>(Arrays.asList(
-//					Persona.creaPersona("Anonimo"),
-//					new Persona(1, "Pepito", "GRILLO"),
-//					new Persona(2, "Carmelo", "COTON"), 
-//					new Persona(3, "Capitan", "TAN")
-//					));
+		void setUp() throws Exception {
+			listaFake = new ArrayList<Persona>(Arrays.asList(
+					Persona.creaPersona("Anonimo"),
+					new Persona(1, "Pepito", "GRILLO"),
+					new Persona(2, "Carmelo", "COTON"), 
+					new Persona(3, "Capitan", "TAN")
+					));
 			dao = mock(PersonaRepository.class);
 			srv = new PersonaServiceImpl(dao);
 		}
@@ -90,7 +76,7 @@ class PersonaServiceTest {
 			
 			@Test
 			@DisplayName("getAll: recupera multiples entidades")
-			void testGetAll_isNotEmpty(TestReporter out) {
+			void testGetAll_isNotEmpty() {
 				when(dao.findAll()).thenReturn(listaFake);
 
 				var obtenido = srv.getAll();
@@ -98,7 +84,6 @@ class PersonaServiceTest {
 				assertNotNull(obtenido);
 				assertEquals(4, obtenido.size());
 				verify(dao, times(1)).findAll();
-				obtenido.forEach(item -> out.publishEntry(item.toString()));
 			}
 			@Test
 			@DisplayName("getAll: recupera 0 entidades porque esta vacia")
