@@ -1,4 +1,4 @@
-package com.example;
+package com.example.redis;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -9,22 +9,22 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestReporter;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
-
-import com.example.redis.ExternalCounter;
 
 import redis.clients.jedis.UnifiedJedis;
 
+@Testcontainers
 public class RedisTest {
 	private ExternalCounter cont;
 
 	@Container
-	public GenericContainer redis = new GenericContainer(DockerImageName.parse("redis:latest"))
+	public GenericContainer redis = new GenericContainer(DockerImageName.parse("redis:alpine"))
 	    .withExposedPorts(6379);
 
 	@BeforeEach
     public void setUp(TestReporter testReporter) {
-		redis.start();
+//		redis.start();
         String address = redis.getHost();
         Integer port = redis.getFirstMappedPort();
         
