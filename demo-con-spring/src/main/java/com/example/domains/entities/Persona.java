@@ -1,5 +1,8 @@
 package com.example.domains.entities;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -9,21 +12,37 @@ public class Persona implements EntityValidatable {
 	private int id;
 	private String nombre;
 	private String apellidos;
+	private LocalDate nacimiento;
 	
 	private Persona() { }
 	
-	public Persona(int id, String nombre, String apellidos) {
+	public Persona(int id, String nombre) {
 		this.id = id;
 		setNombre(nombre);
+	}
+	
+	public Persona(int id, String nombre, String apellidos) {
+		this(id, nombre);
 		setApellidos(apellidos);
 	}
 	
+	public Persona(int id, String nombre, LocalDate nacimiento) {
+		this(id, nombre);
+		setNacimiento(nacimiento);
+	}
+	
+	public Persona(int id, String nombre, String apellidos, LocalDate nacimiento) {
+		this(id, nombre, apellidos);
+		setNacimiento(nacimiento);
+	}
+
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
+
 	public String getNombre() {
 		return nombre;
 	}
@@ -32,6 +51,7 @@ public class Persona implements EntityValidatable {
 			throw new IllegalArgumentException("El nombre no puede ser nulo.");
 		this.nombre = nombre;
 	}
+
 	public Optional<String> getApellidos() {
 		return Optional.ofNullable(apellidos);
 	}
@@ -40,24 +60,50 @@ public class Persona implements EntityValidatable {
 			throw new IllegalArgumentException("Los apellidos no pueden ser nulo.");
 		this.apellidos = apellidos;
 	}
+	public void clearApellidos() {
+		this.apellidos = null;
+	}
 	
+	public LocalDate getNacimiento() {
+		return nacimiento;
+	}
+	public void setNacimiento(LocalDate nacimiento) {
+		if(nacimiento == null)
+			throw new IllegalArgumentException("La fecha de nacimiento no pueden ser nula.");
+		if(nacimiento.isAfter(LocalDate.now()))
+			throw new IllegalArgumentException("La fecha de nacimiento no pueden ser futura.");
+		this.nacimiento = nacimiento;
+	}
+	public void clearNacimiento() {
+		this.nacimiento = null;
+	}
+	
+	public boolean hasEdad() {
+		 return nacimiento != null;
+		
+	}
+	public byte getEdad() {
+		 if(!hasEdad())
+			 throw new NoSuchElementException("La fecha de nacimiento no pueden ser nula.");
+		 return (byte) ChronoUnit.YEARS.between(nacimiento, LocalDate.now());		
+	}
+
 	@Override
 	public String toString() {
 		return "Persona [id=" + id + ", nombre=" + nombre + ", apellidos=" + apellidos + "]";
 	}
 
 
-	public static Persona creaPersona(String nombre, String apellidos) {
-//		return null;
-//		throw new ArithmeticException();
-		return new Persona(0, nombre, apellidos);
-	}
-
 	public static Persona creaPersona(String nombre) {
 //		return null;
 		var p = new Persona();
 		p.setNombre(nombre);
 		return p;
+	}
+
+	public static Persona creaPersona(String nombre, String apellidos) {
+//		return null;
+		return new Persona(0, nombre, apellidos);
 	}
 
 	@Override

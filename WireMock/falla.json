@@ -1,0 +1,10 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/falla"
+  },
+
+  "response": {
+    "status": 404
+  }
+}
